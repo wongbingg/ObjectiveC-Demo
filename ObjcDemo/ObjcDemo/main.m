@@ -19,8 +19,39 @@
     NSString *name; // instance variable
     NSString *artist;
 }
--(NSString*) name; // instance method
--(NSString*) artist;
+- (NSString*) name; // instance method
+- (NSString*) artist;
+- (void)setName:(NSString *)newName;
+- (void)setArtist:(NSString *)newArtist;
+@end
+
+@implementation Song
+
+- (NSString *)artist 
+{
+    return artist;
+}
+
+- (NSString *)name 
+{
+    return name;
+}
+
+- (void)setName:(NSString *)newName
+{
+    if (name != newName) {
+        [name release];
+        name = [newName retain];
+    }
+}
+
+- (void)setArtist:(NSString *)newArtist
+{
+    if (artist != newArtist) {
+        [artist release]; /// receiver 인 artist 의 참조카운트를 -1
+        artist = [newArtist retain]; // receiver인 newArtist의 참조카운트를 +1
+    }
+}
 
 @end
 
@@ -29,11 +60,14 @@ int main(int argc, const char * argv[]) {
         // insert code here...
         NSLog(@"Hello, World!");
         
-//        id mySong = [[Song alloc] init];
-        /// id 타입은 모든 객체를 두루 포인팅할 수 있는 타입이다.
-        /// mySong 은 Song 이라는 타입의 객체를 포인팅한다.
-        /// id 타입은 객체에 대해 어떠한 정보도 가지고 있지 않다. 그래서 isa 라는 instnace variable을 명시적으로 가져 실제 객체가 어떤 타입인지
-        /// 기록해놓는다. runtime 시에 알아낼 수 있음. 이런 메커니즘을 이용해 dynamic typing이 가능해짐.
+        Song *mySong = [[Song alloc] init];
+        [mySong setName:@"Imagine"];
+        [mySong setArtist:@"John Lennon"];
+        
+        NSLog(@"Song Name: %@", [mySong name]);
+        NSLog(@"Artist: %@", [mySong artist]);
+         
+        [mySong release];
     }
     return 0;
 }
