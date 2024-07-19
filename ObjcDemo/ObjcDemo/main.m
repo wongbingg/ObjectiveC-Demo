@@ -218,3 +218,18 @@ int main(int argc, const char * argv[]) {
  Interface 와 Implementation 파일을 구분해두어야 open counterpart 기능을 제공한다.
 
  */
+
+/*
+ MARK: @property, @synthesize, @dynamic 키워드에 대해
+ 
+ Objective-C 에서 객체의 멤버변수를 외부에서 접근하도록 하려면 접근자 메서드 getter와 setter를 만들어주어야 한다.
+ 하지만 모든 프로퍼티마다 getter setter를 적용하는 반복작업은 시간이 오래걸린다..
+ 그래서 위 3개의 개념이 등장했다.
+ @interface - @property
+ @implementation - @synthesize, @dynamic
+ 
+ @dynamic : @synthesize 대신 사용할 수 있고, getter, setter 메서드가 클래스 자신에 의해 구현되지 않고 다른 어딘가에
+ 구현되어 있다고 알려주어 getter/setter가 구현되어있지 않아도 컴파일러 경고를 받지 않도록 해주는 역할
+ */
+
+
