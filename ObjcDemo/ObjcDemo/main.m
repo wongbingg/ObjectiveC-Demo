@@ -175,3 +175,46 @@ int main(int argc, const char * argv[]) {
     ex) if([anObject isKindOfClass:[Rectangle class]])
     ex) if([anObject isKindOfClass:NSClassFromString(className)])
  */
+
+// MARK: 클래스 정의하기 .
+/*
+ 1. Interface: 한 클래스의 메소드와 인스턴스 변수를 선언. 어느 수퍼클래스로부터 상속 받는지 기입. - 보통 헤더파일인 *.h 파일에 정의
+ 
+ ex)
+    @interface ClassName: ItsSuperClass
+    {
+        // instance variables declaration..
+    }
+    // method declarations
+    @end
+
+    인터페이스는 위와같이 정의하고, 인스턴스 메서드는 - 사인, 클래스 메서드는 + 사인을 prefix로 붙임.
+ 
+ ex)
+    -(return type)MethodName:(parameter_type1)param1Name MethodName_cont:(parameter_type2)param2Name
+    위 코드는 메서드 정의 형식.
+ 
+ ex) #import <header_name.h>
+ 인터페이스 파일을 import 하려면 위처럼 하면 된다.
+ 
+ ex) @class ClassA_name
+ import 한 헤더파일 내에 위 클래스가 선언되어있지 않다면 이런식으로 어딘가 선언되어 있다고 컴파일러에 알려주면 된다.
+ 그럼 굳이 위 클래스가 선언된 헤더파일을 import 하지 않아도 된다.
+ 장점:
+    A.h 파일, A.m 파일 | B.h 파일, B.m 파일 이렇게 존재하고 A 와 B 서로의 코드에서 서로를 사용한다면, 컴파일 시
+    A를 컴파일 하려면 B를 먼저 컴파일 해놔야하고, B를 하자면 A를 먼저 컴파일 해놔야 해서 순환 의존이 발생해 컴파일을 못하게됨.
+    하지만 @class directive 를 쓰면 이를 방지할 수 있다.
+ 
+ 2. Implementation : 메소드 구현부 - 보통 구현 파일인 *.m 에 구현
+ 
+ 클래스의 구현은 그 선언과 무척 비슷하게 한다.
+ 모든 implementation 파일은 그에 대응하는 interface 파일을 import 해야한다. 이렇게 함으로 implementation 파일에서
+ 수퍼 클래스의 이름, 인스턴스 변수들의 선언을 생략할 수 있다.
+ ex)
+    @import "ClassName.h"
+    @implementation ClassName
+ 
+ 
+ Interface 와 Implementation 파일을 구분해두어야 open counterpart 기능을 제공한다.
+
+ */
