@@ -66,15 +66,13 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"Song Name: %@", [mySong name]);
         NSLog(@"Artist: %@", [mySong artist]);
-         
         [mySong release];
     }
     return 0;
 }
 
-/*
  // MARK: 메세지 호출법
- 
+/*
  
  ex) [객체 method]
  ex) [receiver message]
@@ -90,16 +88,90 @@ int main(int argc, const char * argv[]) {
  (void) 는 반환값 타입을 의미
  
  인자는 함수 내부로 가져와서 사용할 때 , 이름은 외부에서 메서드 사용시 쓸 파라미터이름
- 
+ */
+
  // MARK: Polymorphism 다형성
- 
+/*
  ex) display 란 메세지를 Rectangle, Cube 두개 모두 가지고있을 때(내부로직은 다른)
  메세지를 보내는 측에서는 id 로 두 객체를 가르킬 수 있고, 메세지를 두곳에 보낼 수 있다.
  다른 객체가 같은 메세지에 대해 반응하므로 이것도 Polymorphism에 해당한다.
- 
+ */
+
  // MARK: Dynamic binding 혹은 Late Binding
- 
+/*
  Objective-C 에선 객체는 id의 형태로 받고 그것에 대해 메세지를 보내기 때문에 compile 시에는 구체적으로 객체타입을 모른다.
  runtime에 타입을 알고 이것을 동적 바인딩이라고 한다. 장점 : 유연하다, 단점: 컴파일시 에러체크를 할 수 없다.
  정적 바인딩을 하면 컴파일시 잔작업을 미리 해두지만 동적 바인딩은 그렇지 않아서 성능상 이슈가 있다.
+ */
+
+// MARK: Classes
+/*
+ 1. 상속을 지원한다. but 다중상속을 지원하지는 않는다. 하나의 superclass 만 가질 수 있다.
+ 1-1. NSObject 클래스
+    NSObject 클래스는 root 클래스로써, superclass를 가지지 않음. cocoa 에서 이 클래스는 모든 클래스의 root 클래스가 됨.
+    이 클래스를 상속하면 "runtime 시스템에서 지원을 받는 객체" 를 만들 수 있음.
+ 1-2. 인스턴스 변수, method가 상속됨.
+    NSObject 의 isa 와 같은 인스턴스 변수는 NSObject를 상속한 모든 클래스에 자동으로 들어감.
+ 1-4. 오버라이딩 가능.
+ 1-5. Abstract class
+ 2-1. 정적 타이핑
+    ex) Rectangle *myRect , 또는 Graphic *myRect;
+    
+ 2-2. Type Introspection
+    runtime 시 해당 인스턴스가 어떤 클래스의 인스턴스인지 등을 알아내는 것을 의미.
+    ex) if ([anObject isMemberOfClass:someClass])
+    위 코드는 anObject 가 someClass 타입일 시 True 를 반환.
+ 
+    ex) if ([anObject isKindOfClass:someClass])
+    위 코드는 anObject의 수퍼클래스 중 someClass가 있는가를 알아냄.( 직접적인 superclass가 아니어도 됨.)
+ 
+ 3. 클래스 객체 (Class Object)
+    ex) int versionNumber = [Rectangle version];
+    위처럼 클래스 이름이 receiver로 사용됐을 경우만 클래스 객체로 의미.
+ 
+    ex) id aClass = [anObject class];
+        id rectClass = [Rectangle class];
+    위처럼 클래스 객체도 id 로 타입을 지정해줄 수 있다.
+    
+    ex) Class aClass = [anObject class];
+        Class rectClass = [Rectangle class];
+    이렇게도 표현 가능함. 모든 클래스 객체는 Class 타입이다.
+ 
+ 3-1. 인스턴스 만들기
+    ex) id *myRect;
+        myRect = [Rectangle alloc];
+    alloc 메서드는 Rectangle 인스턴스의 변수들을 위해 메모리를 동적으로 할당하고, 0으로 초기화.
+    단, isa 변수는 만들어진 새 인스턴스를 클래스에 연결.
+    
+    ex) myRect = [[Rectangle alloc] init];  OR   myRect = [Rectangle alloc]; [myRect init];
+    보통 초기화 시, alloc 다음 바로 init을 수행. 객체는 항상 이렇게 allocation 이 되고 초기화 된 후에 사용해야 한다!
+ 
+ 3-2. Objective-C 클래스의 커스텀
+ 3-3. 변수와 클래스 객체(class object)
+    ex)
+    @interface myClass
+    {
+        static int example_class_variable;
+        int name;
+    }
+ 
+    위와 같이 static 키워드를 이용해서 클래스 변수를 만들어줄 수 있다. 모든 인스턴스 객체는 이 static 변수의 내용을 공유한다.
+ 
+3-4. 클래스 객체 초기화
+    클래스가 static 이나 global 변수들을 사용한다면, initialize 메소드 사용
+ 
+    ex)
+    + (void)initialize
+    {
+        staitc BOOL initialized = NO;
+        if(!initialized) {
+            // 초기화를 여기서 진행.
+            initialized = YES;
+        }
+    }
+ 
+    받은 메세지를 처리할 클래스 메소드가 없을 때, 상속 관계에서 상위 클래스를 타고 올라가 최종적으로 root class의 메소드를 찾게 된다.
+ 4. 소스코드에서 클래스 이름
+    ex) if([anObject isKindOfClass:[Rectangle class]])
+    ex) if([anObject isKindOfClass:NSClassFromString(className)])
  */
