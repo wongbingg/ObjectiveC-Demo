@@ -232,4 +232,49 @@ int main(int argc, const char * argv[]) {
  구현되어 있다고 알려주어 getter/setter가 구현되어있지 않아도 컴파일러 경고를 받지 않도록 해주는 역할
  */
 
+// MARK: Chapter 5. How Messaging Works
+
+/*
+ 
+ 1. Selector
+ 
+ method selector 들은 dispatch table 이란 곳에 저장됨. 타입은 SEL 로 표현.
+ ex) SEL setWidthHeight; setWidthHeight = @selector(setWidth:height:);
+ 
+ selector 는 함수 포인터 개념과 유사하다. selector를 사용해 함수 호출을 하면 이렇게 된다.
+ ex) [friend gossipAbout:aNeighbor];
+ ex) [friend performSelector:@selector(gossipAbout:) withObject:aNeighbor];
+ 
+ 1-1. Messaging Error 처리
+ 
+ 존재하지 않는 method를 호출했을 때 에러처리 하는 방법
+ ex)
+    if([anObject respondsToSelector:@selector(setOrigin::)])
+        [anObject setOrigin:0.0:0.0];
+    else
+        fprintf(stderr, "%s can't be placed\n", [NSStringFromClass([anObject class]) cString]);
+ 
+ 방법은 respondsToSelector 를 이용하는 것. anObject가 setOrigin이란 메시지를 가지고 있는지 runtime시 알아냄.
+ 지금처럼 에러 메시지를 내고 빠지는 방법도 있지만, 혹은 그 능력을 가진 클래스에게 토스를 해줄 수 있다. 이를 "forwarding" 이라고 함.
+ 
+ 2. Hidden Argument
+ 
+ex)
+    -strange
+    {
+        id target = getTheReceiver();
+        SEL method = getTheMethod();
+        if (target == self || method == _cmd)
+        return nil;
+        return [target performSelector:method];
+    }
+ 
+self 와 _cmd 는 숨겨진 인자이다.
+ 
+ 3. Message to self and super
+
+
+ 
+ */
+
 
