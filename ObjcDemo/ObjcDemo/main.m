@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSString+Reverse.h"
 
 /*
  // MARK: 클래스 정의
@@ -67,6 +68,11 @@ int main(int argc, const char * argv[]) {
         NSLog(@"Song Name: %@", [mySong name]);
         NSLog(@"Artist: %@", [mySong artist]);
         [mySong release];
+        
+        NSString *originalString = @"Hello, Objective-C!";
+        NSString *reversedString = [originalString reverseString];
+        NSLog(@"Original String: %@", originalString);
+        NSLog(@"Reversed String: %@", reversedString);
     }
     return 0;
 }
@@ -273,7 +279,18 @@ self 와 _cmd 는 숨겨진 인자이다.
  
  3. Message to self and super
 
+ */
 
+// MARK: Chapter 6. How to Extend Classes
+
+/*
+ 1. Category
+ 
+ 기존의 클래스를 수평적으로 확장하는 방법. Swift 의 Extend 와 유사.
+ 
+ 
+ 
+ 
  
  */
 
